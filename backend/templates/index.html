@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Flask Chat Room</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+  <script type="text/javascript">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      function setUsername() {
+        var username = document.getElementById('username').value;
+        var room = document.getElementById('room').value;
+        if (username && room) {
+          socket.emit('join', { username: username, room: room });
+          return false;
+        } else {
+          alert('Please enter username and select a room.');
+          return false;
+        }
+      }
+
+      socket.on('message', function (msg) {
+        console.log('Received message' + msg);
+        var li = document.createElement('li');
+        li.innerHTML = msg;
+        document.getElementById('messages').appendChild(li);
+      });
+
+      function sendMessage() {
+        var message = document.getElementById('message').value;
+        var room = document.getElementById('room').value;
+        socket.emit('message', { msg: message, room: room });
+        document.getElementById('message').value = '';
+        return false;
+      }
+
+  </script>
+</head>
+
+<body>
+  <form onsubmit="return setUsername()">
+    <input id="username" placeholder="Enter your username" autocomplete="off" />
+    <select id="room">
+      <option value="room1">Room 1</option>
+      <option value="room2">Room 2</option>
+      <!-- Add more options for additional rooms -->
+    </select>
+    <button>Join Room</button>
+  </form>
+  
+  <!-- Update the message sending form -->
+  <form onsubmit="return sendMessage()">
+    <ul id="messages"></ul>
+    <input id="message" autocomplete="off" />
+    <button>Send</button>
+  </form>
+</body>
+
+</html>
