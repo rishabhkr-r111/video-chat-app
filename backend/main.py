@@ -34,11 +34,19 @@ def chat_join(chat_id):
 
 @socketio.on('join')
 def on_join(data):
-    username = data['username']
-    room = data['room']
-    print(username, room)
-    join_room(room)
-    emit('message', f'{username} has entered the room.', room=room)
+    if data['room'] not in chat_rooms:
+        chat_rooms[data['room']] = {}
+        username = data['username']
+        room = data['room']
+        print(username, room)
+        join_room(room)
+        emit('message', f'{username} has entered the room.', room=room)
+    else:
+        username = data['username']
+        room = data['room']
+        print(username, room)
+        join_room(room)
+        emit('message', f'{username} has entered the room.', room=room)
 
 
 @socketio.on('leave')
