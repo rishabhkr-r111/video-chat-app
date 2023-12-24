@@ -1,23 +1,52 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "../App.css";
 import "../css/home.css";
+
+const url = "http://127.0.0.1:5000";
 
 function Home() {
   const navigate = useNavigate();
   const [room, setRoom] = useState("");
 
-  function joinRoom() {
+  async function joinRoom() {
     if (room) {
       const userId = window.prompt("Please enter your user id");
+      const response = await fetch(`${url}/join-room`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ username: userId, room: room }),
+      });
+      if (!response.ok) {
+        let text = await response.text();
+        alert(response.status + " : " + response.statusText + " : " + text);
+
+        return;
+      }
+
       navigate(`/chat/${room}`, {
         state: { username: userId, room: room },
       });
     }
   }
 
-  function createRoom() {
+  async function createRoom() {
     const userId = window.prompt("Please enter your user id");
+    const response = await fetch(`${url}/create-room`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ username: userId, room: room }),
+    });
+    console.log(response);
+    if (!response.ok) {
+      let text = await response.text();
+      alert(response.status + " : " + response.statusText + " : " + text);
+      return;
+    }
     navigate(`/chat/${room}`, {
       state: { username: userId, room: room },
     });
