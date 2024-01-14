@@ -10,7 +10,7 @@ function Chat() {
   const location = useLocation();
   const navigate = useNavigate();
   let room = location.state.room;
-  let username = location.state.room;
+  let username = location.state.username;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
