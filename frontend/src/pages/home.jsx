@@ -26,9 +26,7 @@ function Home() {
         return;
       }
 
-      navigate(`/chat/${room}`, {
-        state: { username: userId, room: room },
-      });
+      navigate(`/chat/${room}/${userId}`);
     }
   }
 
@@ -47,9 +45,7 @@ function Home() {
       alert(response.status + " : " + response.statusText + " : " + text);
       return;
     }
-    navigate(`/chat/${room}`, {
-      state: { username: userId, room: room },
-    });
+    navigate(`/chat/${room}/${userId}`);
   }
 
   return (
