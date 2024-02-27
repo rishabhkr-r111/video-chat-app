@@ -5,8 +5,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 cors = CORS(app, resources={
-            r"/socket.io/*": {"origins": "http://localhost:5173"}})
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:5173")
+            r"/socket.io/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 chat_rooms = []
 

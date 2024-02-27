@@ -5,11 +5,15 @@ const SocketContext = createContext(null);
 
 export const useSocket = () => {
   const socket = useContext(SocketContext);
+
   return socket;
 };
 
 export const SocketProvider = (props) => {
-  const socket = useMemo(() => io("localhost:5000"), []);
+  const socket = useMemo(() => {
+    const s = io("localhost:5000");
+    return s;
+  }, []);
 
   return (
     <SocketContext.Provider value={socket}>

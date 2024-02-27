@@ -6,8 +6,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/chat/:room/:username" element={<Chat />} />
-      <Route path="/*" element={<Home />} />
+      <Route path="/room/:roomId" element={<Chat />} />
+      {/* <Route path="/*" element={<Home />} /> */}
     </Routes>
   );
 }
