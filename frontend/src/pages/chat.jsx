@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import peer from "../services/peer";
 import { useSocket } from "../context/socketProvider";
+import "../css/chat.css";
 
 function Chat() {
   const socket = useSocket();
@@ -13,11 +14,11 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
 
-  const handleMessage = useCallback(() => {
+  const handleMessage = () => {
     socket.emit("user:message", { to: roomId, message });
     console.log(`Message to ${roomId}: ${message}`);
     setMessages((msgs) => [...msgs, message]);
-  }, [message, roomId, socket]);
+  };
 
   const handleIncommingMessage = useCallback(({ from, message }) => {
     console.log(`Message from ${from}: ${message}`);
@@ -171,7 +172,7 @@ function Chat() {
         <input
           type="text"
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setMessage(e.target.value);
           }}
         />

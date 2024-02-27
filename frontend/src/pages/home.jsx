@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "../context/socketProvider";
+import "../css/home.css";
 
 function Home() {
   const [email, setEmail] = useState("");
@@ -34,8 +35,8 @@ function Home() {
   }, [socket, handleJoinRoom]);
 
   return (
-    <div>
-      <h1>Lobby</h1>
+    <div className="home-div">
+      <h1>Video Chat App</h1>
       <form onSubmit={handleSubmitForm}>
         <label htmlFor="email">Email ID</label>
         <input
@@ -45,7 +46,7 @@ function Home() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
-        <label htmlFor="room">Room Number</label>
+        <label htmlFor="room">Room ID</label>
         <input
           type="text"
           id="room"
