@@ -1,4 +1,3 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
@@ -27,29 +26,30 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - run:  ls
-      - name: Set up Node
+      
+      # Set up Node, Install dependencies, and Build in ./frontend directory
+      - name: Set up Node and Install dependencies
+        working-directory: ./frontend
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      - name: Install dependencies
-        run: npm install
       - name: Build
+        working-directory: ./frontend
         run: npm run build
+
+      # Remaining steps (Setup Pages, Upload artifact, Deploy to GitHub Pages) will inherit the working directory from the job level
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload dist repository
-          path: './dist'
+          path: './frontend/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+
