@@ -32,14 +32,13 @@ jobs:
       
       # Set up Node, Install dependencies, and Build in ./frontend directory
       - name: Set up Node and Install dependencies
-        working-directory: ./frontend
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
+        run: |
+          cd frontend
+          npm install
       - name: Build
-        working-directory: ./frontend
-        run: npm run build
+        run: |
+          cd frontend
+          npm run build
 
       # Remaining steps (Setup Pages, Upload artifact, Deploy to GitHub Pages) will inherit the working directory from the job level
       - name: Setup Pages
@@ -52,4 +51,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+
 
