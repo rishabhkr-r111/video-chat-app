@@ -28,9 +28,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - run: cd frontend
       - name: Checkout
         uses: actions/checkout@v4
+      - run: cd frontend
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
