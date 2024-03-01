@@ -3,12 +3,12 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/video-chat-app/",
+  base: "/",
   plugins: [react()],
 
-  build: {
-    rollupOptions: {
-      external: ["react-player"],
-    },
-  },
+  // build: {
+  //   rollupOptions: {
+  //     external: ["react-player"],
+  //   },
+  // },
 });

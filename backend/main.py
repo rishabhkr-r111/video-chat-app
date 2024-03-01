@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -8,72 +9,59 @@ cors = CORS(app, resources={
             r"/socket.io/*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-chat_rooms = []
 
+emailToSocketIdMap = {}
+socketidToEmailMap = {}
 
 @app.route('/')
-def main():
-    return render_template('index.html')
+def index():
+    return "api-video-chat"
 
+@socketio.on('connect')
+def handle_connect():
+    print(f"Socket Connected: {request.sid}")
 
-@app.route('/create-room', methods=['POST'])
-def chat():
-    data = request.get_json()
-    print(data)
-    if data['room'] not in chat_rooms:
-        chat_rooms.append(data['room'])
-        username = data['username']
-        room = data['room']
-        print(username, room)
-        return "Chat room created", 200
-    else:
-        return  "Chat room already exists", 404
-
-
-@app.route('/join-room', methods=['POST'])
-def chat_join():
-    data = request.get_json()
-    print(data)
-    if data['room'] in chat_rooms:
-        username = data['username']
-        room = data['room']
-        print(username, room)
-        return "Chat room joined", 200
-    else:
-        return "Room not found", 404
-
-@socketio.on('join')
-def on_join(data):
-        username = data['username']
-        room = data['room']
-        print(username, room)
-        join_room(room)
-        emit('message', {'user': username, 'msg' : 'Entered the room', 'room' : room} , room=room)       
-        
-
-
-@socketio.on('leave')
-def on_leave(data):
-    username = data['username']
+@socketio.on('room:join')
+def handle_room_join(data):
+    email = data['email']
     room = data['room']
-    leave_room(room)
-    emit('message', f'{username} has left the room.', room=room)
+    emailToSocketIdMap[email] = request.sid
+    socketidToEmailMap[request.sid] = email
+    join_room(room)
+    emit('user:joined', {'email': email, 'id': request.sid}, room=room)
+    emit('room:join', data, room=request.sid)
 
+@socketio.on('user:message')
+def handle_user_message(data):
+    to = data['to']
+    print("user:message", data)
+    emit('incomming:message', data, room=to)
 
-@app.route('/api/messages', methods=['POST'])
-def send_message():
-    data = request.get_json()
-    room = data.get('room')
-    message = data.get('message')
-    socketio.emit('message', message, room=room)
-    return jsonify({'status': 'Message sent'})
+@socketio.on('user:call')
+def handle_user_call(data):
+    to = data['to']
+    offer = data['offer']
+    emit('incomming:call', {'from': request.sid, 'offer': offer}, room=to)
 
+@socketio.on('call:accepted')
+def handle_call_accepted(data):
+    to = data['to']
+    ans = data['ans']
+    emit('call:accepted', {'from': request.sid, 'ans': ans}, room=to)
 
-@socketio.on('message')
-def handle_message(msg):
-    print(msg)
-    emit('message', msg , room=msg['room'])
+@socketio.on('peer:nego:needed')
+def handle_peer_nego_needed(data):
+    to = data['to']
+    offer = data['offer']
+    emit('peer:nego:needed', {'from': request.sid, 'offer': offer}, room=to)
+    print("peer:nego:needed", offer)
 
+@socketio.on('peer:nego:done')
+def handle_peer_nego_done(data):
+    to = data['to']
+    ans = data['ans']
+    emit('peer:nego:final', {'from': request.sid, 'ans': ans}, room=to)
+    print("peer:nego:done", ans)
 
 if __name__ == '__main__':
     socketio.run(app)

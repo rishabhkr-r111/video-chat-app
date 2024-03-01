@@ -13,6 +13,7 @@ function Home() {
   const handleSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
+
       socket.emit("room:join", { email, room });
     },
     [email, room, socket]

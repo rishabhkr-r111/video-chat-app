@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ReactPlayer } from "react-player";
+import ReactPlayer from "react-player";
 import peer from "../services/peer";
 import { useSocket } from "../context/socketProvider";
 import "../css/chat.css";
