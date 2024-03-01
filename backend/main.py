@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 cors = CORS(app, resources={
-            r"/socket.io/*": {"origins": "*"}})
+            r"*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
@@ -16,7 +16,7 @@ socketidToEmailMap = {}
 @app.route('/')
 def index():
     return "api-video-chat"
-
+     
 @socketio.on('connect')
 def handle_connect():
     print(f"Socket Connected: {request.sid}")
@@ -64,4 +64,4 @@ def handle_peer_nego_done(data):
     print("peer:nego:done", ans)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    app.run(app)
