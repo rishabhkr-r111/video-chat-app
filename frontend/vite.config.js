@@ -6,9 +6,9 @@ export default defineConfig({
   base: "/",
   plugins: [react()],
 
-  build: {
-    rollupOptions: {
-      external: ["react-player"],
-    },
-  },
+  // build: {
+  //   rollupOptions: {
+  //     external: ["react-player"],
+  //   },
+  // },
 });
