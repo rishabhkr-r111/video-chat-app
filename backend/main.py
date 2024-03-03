@@ -64,4 +64,4 @@ def handle_peer_nego_done(data):
     print("peer:nego:done", ans)
 
 if __name__ == '__main__':
-    app.run(app)
+    app.run(host="0.0.0.0")

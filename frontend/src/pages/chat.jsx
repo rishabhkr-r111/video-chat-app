@@ -17,7 +17,7 @@ function Chat() {
   const handleMessage = () => {
     socket.emit("user:message", { to: roomId, message });
     console.log(`Message to ${roomId}: ${message}`);
-    setMessages((msgs) => [...msgs, message]);
+    setMessage("");
   };
 
   const handleIncommingMessage = useCallback(({ from, message }) => {
@@ -131,9 +131,9 @@ function Chat() {
   ]);
 
   return (
-    <div>
-      <h1>Room Page</h1>
-      <div>
+    <div className="chat-container">
+      {/* <h1>Room Page</h1> */}
+      <div className="video-container">
         <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
         {myStream && <button onClick={sendStreams}>Send Stream</button>}
         {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
@@ -162,7 +162,7 @@ function Chat() {
           </>
         )}
       </div>
-      <div>
+      <div className="chat-box">
         <h1>Chat</h1>
         <ul>
           {messages.map((msg, idx) => (
@@ -171,6 +171,7 @@ function Chat() {
         </ul>
         <input
           type="text"
+          value={message}
           onChange={(e) => {
             // console.log(e.target.value);
             setMessage(e.target.value);

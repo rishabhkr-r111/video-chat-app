@@ -12,7 +12,7 @@ export const useSocket = () => {
 export const SocketProvider = (props) => {
   const socket = useMemo(() => {
     //localhost:5000
-    const s = io("localhost:5000", { debug: true });
+    const s = io("https://api-vidchat.onrender.com", { debug: true });
     return s;
   }, []);
 

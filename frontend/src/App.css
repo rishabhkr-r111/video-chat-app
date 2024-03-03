@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0;
   margin: 0;
 }
@@ -12,3 +12,6 @@ html {
   scrollbar-width: none;
 }
 
+body {
+  margin: 0;
+}
