@@ -13,7 +13,7 @@ body {
   flex: 1; 
   padding: 20px;
   background-color: #333; 
-  border-radius: 10px; 
+  border-radius: 20px; 
 }
 
 .video-container h1 {
@@ -23,10 +23,10 @@ body {
 
 .chat-box {
   flex: 1; 
-  padding: 20px;
+  padding: 35px;
   background-color: #333; 
   overflow-y: auto; 
-  border-radius: 10px; 
+  border-radius: 20px; 
 }
 
 .chat-box h1 {
@@ -51,5 +51,40 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.chat-box input[type="text"]:focus,
-.chat-box butt
+/* .chat-box input[type="text"]:focus,
+.chat-box butt{
+  
+} */
+
+@media  screen  and (max-width:360px) {
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    bottom: 10px;
+  }
+
+  .video-container {
+    flex: 1; 
+    padding: 35px;
+    /* background-color: #333;  */
+    border-radius: 20px; 
+    position: absolute;
+    width: 290px;
+    height: 370px;
+    top: 5px;
+  }
+
+  .chat-box {
+    flex: 1;
+    padding: 35px;
+    /* background-color: #333; */
+    overflow-y: auto;
+    border-radius: 20px;
+    position: absolute;
+    bottom: 5px;
+    width: 290px;
+    height: 110px;
+    
+}
+  
+}
