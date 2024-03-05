@@ -83,8 +83,8 @@ body {
 
   .video-player {
     text-align: center;
-    width: 100% !important;
-    height: 100% !important;
+    width: 40% !important;
+    height: 40% !important;
   }
 
   .video-container {
@@ -118,7 +118,19 @@ body {
     justify-content: center;
     align-items: center;
     overflow-y: scroll;
-    width: 75%;
-    height: 75%;
+    width: 100%;
+  }
+
+  .video-container h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  .video-box > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
