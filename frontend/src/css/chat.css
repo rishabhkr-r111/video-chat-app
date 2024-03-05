@@ -76,10 +76,9 @@ body {
 
 @media screen and (max-width: 480px) {
   .chat-container {
-    display: flex;
-    flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    height: 85vh;
+    margin: 0;
   }
 
   .video-player {
@@ -108,6 +107,7 @@ body {
     left: 0;
     height: 15vh;
     width: 100%;
+    margin: 0;
   }
 
   .video-box {
